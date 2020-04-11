@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
               child: Text('Answer 3'),
               onPressed: () {
                 // ...
-                print('Answer 3 chosen')
+                print('Answer 3 chosen');
               },
             ),
           ],
