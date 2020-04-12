@@ -1,23 +1,44 @@
+//Block of imports for packages
 import 'package:flutter/material.dart';
 
-void main() {
+//Block of imports for files
+import './question.dart';
+
+/*void main() {
   runApp(MyApp());
+}*/
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _MyAppState();
+  }
 }
 
-class MyApp extends StatelessWidget {
-  var questionIndex = 0;
+// Leading _ makes the class a private class frop to make it public
+class _MyAppState extends State<MyApp> {
+  //Leading _ makes a property inside a class private
+  //Defined Property
+  var _questionIndex = 0;
 
-  void answerQuestion() {
-    questionIndex = questionIndex + 1;
-    print (questionIndex);
+  //Leading _ makes a method inside a class private
+  //Defined Method
+  void _answerQuestion() {
+    setState(() {
+      _questionIndex = _questionIndex + 1;
+    });
+    print(_questionIndex);
   }
 
   @override
   Widget build(BuildContext context) {
-  var questions = [
-    "What's your favorite color",
-    'What\'s your favorite animal'
-  ];
+    var questions = [
+      "What's your favorite color",
+      'What\'s your favorite animal'
+    ];
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -25,10 +46,13 @@ class MyApp extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Text(questions[questionIndex]),
+            //Instead of calling text widget we call the class for question text which is a text widget but in a seperte file
+            Question(
+              questions[_questionIndex],
+            ),
             RaisedButton(
               child: Text('Answer 1'),
-              onPressed: answerQuestion,
+              onPressed: _answerQuestion,
             ),
             RaisedButton(
               child: Text('Answer 2'),
