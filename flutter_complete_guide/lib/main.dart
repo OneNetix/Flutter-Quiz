@@ -21,6 +21,22 @@ class MyApp extends StatefulWidget {
 
 // Leading _ makes the class a private class frop to make it public
 class _MyAppState extends State<MyApp> {
+  final questions = const [
+    //Create a map of key value paires
+    {
+      'questionText': "What's your favorite color?",
+      'answers': ['Black', 'Red', 'Green', 'White']
+    },
+    {
+      'questionText': 'What\'s your favorite animal?',
+      'answers': ['Rabbit', 'Snake', 'Dog', 'Cat']
+    },
+    {
+      'questionText': "What's your favorite car?",
+      'answers': ['BMW', 'Ford', 'Dodge', 'Ferrari', 'Porsche']
+    },
+  ];
+
   //Leading _ makes a property inside a class private
   //Defined Property
   var _questionIndex = 0;
@@ -32,31 +48,37 @@ class _MyAppState extends State<MyApp> {
       _questionIndex = _questionIndex + 1;
     });
     print(_questionIndex);
+    if (_questionIndex < questions.length) {
+      print("We have more questions");
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      "What's your favorite color?",
-      'What\'s your favorite animal?'
-    ];
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('My First App'),
         ),
-        body: Column(
-          children: [
-            //Instead of calling text widget we call the class for question text which is a text widget but in a seperte file
-            Question(
-              questions[_questionIndex],
-            ),
-            //Call the answer button from the answer.dart file by calling the class name
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-            Answer(_answerQuestion),
-          ],
-        ),
+        body: _questionIndex < questions.length
+            ? Column(
+                children: [
+                  //Instead of calling text widget we call the class for question text which is a text widget but in a seperte file
+                  Question(
+                    //Access the questions list var then the questions index followed by the questions key value
+                    questions[_questionIndex]['questionText'],
+                  ),
+                  //Call the answer button from the answer.dart file by calling the class name
+                  //Dynamically create buttons based on questions list
+                  ...(questions[_questionIndex]['answers'] as List<String>)
+                      .map((answer) {
+                    return Answer(_answerQuestion, answer);
+                  }).toList()
+                ],
+              )
+            : Center(
+                child: Text("You did it"),
+              ),
       ),
     );
   }
